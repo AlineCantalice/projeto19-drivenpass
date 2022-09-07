@@ -35,7 +35,9 @@ model Credentials {
   title         String
   url           String
   password      String
-  credentialTag String @unique
+  credentialTag String
+
+  @@unique([title, credentialTag])
 }
 
 model SafeNotes {
@@ -53,6 +55,8 @@ model Wifi {
   title    String @unique
   password String
   wifiTag  String
+
+  @@unique([title, wifiTag])
 }
 
 model Cards {
@@ -66,6 +70,8 @@ model Cards {
   expirationDate DateTime
   isVirtual      Boolean
   type           String
-  title          String   @unique
+  title          String
   cardTag        String
+
+  @@unique([title, cardTag])
 }
