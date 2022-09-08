@@ -1,13 +1,12 @@
 import { CreateUserData } from "../types/userTypes";
 import * as userRepository from '../repositories/userRepository';
-import { Users } from "@prisma/client";
 import bcrypt from 'bcrypt';
-import { generateToken } from "./authService";
+import * as authService from "./authService";
 
 export async function signUp(user: CreateUserData) {
     const userDB = await findUserByEmail(user.email);
 
-    if(userDB){
+    if (userDB) {
         throw {
             response: {
                 status: 409,
@@ -18,13 +17,22 @@ export async function signUp(user: CreateUserData) {
 
     const hashPassword = bcrypt.hashSync(user.password, 10);
 
-    await userRepository.insert({email: user.email, password: hashPassword});
+    await userRepository.insert({ email: user.email, password: hashPassword });
 }
 
 export async function signIn(user: CreateUserData) {
     const userDB = await findUserByEmail(user.email);
 
-    if(!userDB || !bcrypt.compareSync(user.password, userDB.password)){
+    if (!userDB) {
+        throw {
+            response: {
+                status: 401,
+                message: "You must create a new profile"
+            }
+        }
+    }
+
+    if (!bcrypt.compareSync(user.password, userDB.password)) {
         throw {
             response: {
                 status: 401,
@@ -33,9 +41,13 @@ export async function signIn(user: CreateUserData) {
         }
     }
 
-    return await generateToken(userDB);
+    const token = await authService.generateToken(userDB);
+
+    await authService.insert({userId: userDB.id, token: token})
+
+    return token;
 }
 
-export async function findUserByEmail(email: string): Promise<Users> {
-    return {id: 1, email: 'jdjfdk', password: "jkfnkdj"}
+export async function findUserByEmail(email: string) {
+    return await userRepository.findUserByEmail(email);
 }

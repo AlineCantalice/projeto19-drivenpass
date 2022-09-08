@@ -1,14 +1,10 @@
-import { NextFunction, Request, Response } from "express";
+import { Request, Response, NextFunction } from "express";
 
-interface Error {
-    status: number;
-    message?: string;
-}
-
-export default function handleErrorMiddleware(error: Error, req: Request, res: Response, next: NextFunction) {
-    console.log(error)
-    if (error) {
-        res.status(error.status).send(error.message);
+export default function errorHandler(error: any, req: Request, res: Response, next: NextFunction) {
+    console.log(error);
+    if (error.response) {
+        return res.status(error.response.status).send(error.response.message);
     }
+
     res.sendStatus(500);
 }
