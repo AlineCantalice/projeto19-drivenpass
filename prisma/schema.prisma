@@ -33,9 +33,9 @@ model Credentials {
   title         String @db.VarChar(50)
   url           String
   password      String
-  credentialTag String
+  username      String
 
-  @@unique([title, credentialTag, userId])
+  @@unique([title, userId])
 }
 
 model SafeNotes {
@@ -54,9 +54,7 @@ model Wifi {
   userId   Int
   title    String @db.VarChar(50)
   password String
-  wifiTag  String
-
-  @@unique([title, wifiTag, userId])
+  wifiName  String
 }
 
 model Cards {
@@ -64,7 +62,7 @@ model Cards {
   user           Users    @relation(fields: [userId], references: [id])
   userId         Int
   cardName       String
-  cardNumber     BigInt
+  cardNumber     String
   password       String
   cvc            Int
   expirationDate DateTime
