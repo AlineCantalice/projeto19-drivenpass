@@ -8,9 +8,9 @@ export async function signUp(req: Request, res: Response) {
 
         await userService.signUp(user);
 
-        res.status(201).send('Usuário criado com sucesso!')
-    } catch (error) {
-        console.log(`Algo deu errado!!`);
+        res.status(201).send('Usuário criado com sucesso!');
+    } catch (error: any) {
+        res.status(error.response.status).send(error.response.message);
     }
 }
 
@@ -21,7 +21,7 @@ export async function singIn(req: Request, res: Response) {
         const token: string = await userService.signIn(user);
 
         res.status(200).send(token);
-    } catch (error) {
-        console.log(`Algo deu errado!!`);
+    } catch (error: any) {
+        res.status(error.response.status).send(error.response.message);
     }
 }

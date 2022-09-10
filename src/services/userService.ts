@@ -5,7 +5,7 @@ import * as authService from "./authService";
 
 export async function signUp(user: CreateUserData) {
     const userDB = await findUserByEmail(user.email);
-
+    
     if (userDB) {
         throw {
             response: {
@@ -42,8 +42,6 @@ export async function signIn(user: CreateUserData) {
     }
 
     const token = await authService.generateToken(userDB);
-
-    await authService.insert({userId: userDB.id, token: token})
 
     return token;
 }
