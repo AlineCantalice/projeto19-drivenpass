@@ -54,7 +54,7 @@ model Wifi {
   id       Int    @id @default(autoincrement())
   user     Users  @relation(fields: [userId], references: [id])
   userId   Int
-  title    String @db.VarChar(50)
+  title    String 
   password String
   wifiName  String
 
@@ -68,11 +68,11 @@ model Cards {
   cardName       String
   cardNumber     String
   password       String
-  cvc            Int
+  securityCode   String
   expirationDate DateTime
   isVirtual      Boolean
   type           Type
-  title          String   @db.VarChar(50)
+  title          String 
 
   @@unique([title, userId])
   @@map("cards")

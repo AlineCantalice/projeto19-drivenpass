@@ -10,7 +10,7 @@ export async function findById(id: number) {
 }
 
 export async function findAllCredentialOfUser(userId: number) {
-    return await prismaClient.credentials.findMany({ where: { userId }, select: { title: true, url: true, username: true, password: true, userId: true } });
+    return await prismaClient.credentials.findMany({ where: { userId } });
 }
 
 export async function findByTitleAndUserId(title: string, userId: number) {

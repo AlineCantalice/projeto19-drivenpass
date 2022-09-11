@@ -10,7 +10,7 @@ export async function findById(id: number) {
 }
 
 export async function findAllSafeNoteOfUser(userId: number) {
-    return await prismaClient.safeNotes.findMany({ where: { userId }, select: { title: true, note: true, userId: true } });
+    return await prismaClient.safeNotes.findMany({ where: { userId } });
 }
 
 export async function findByTitleAndUserId(title: string, userId: number) {
