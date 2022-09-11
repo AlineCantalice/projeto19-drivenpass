@@ -9,7 +9,7 @@ export async function createSafeNote(req: Request, res: Response) {
 
         await service.createSafeNote({ ...SafeNote, userId });
 
-        res.status(201).send("SafeNote criada com sucesso!")
+        res.status(201).send("Safe Note created with success!")
     } catch (error: any) {
         res.status(error.response.status).send(error.response.message);
     }
@@ -47,7 +47,7 @@ export async function removeSafeNote(req: Request, res: Response) {
 
         await service.removeSafeNote(id, userId);
 
-        res.status(200).send("Credencial deletada com sucesso!!")
+        res.status(200).send("Safe note removed with success!!")
     } catch (error: any) {
         res.status(error.response.status).send(error.response.message);
     }

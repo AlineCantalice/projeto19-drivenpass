@@ -5,6 +5,7 @@ import { CreateUserData } from "../types/userTypes";
 import * as userRepository from '../repositories/userRepository';
 import bcrypt from 'bcrypt';
 import * as userService from "./userService";
+import auth from "../config/index";
 
 export async function signUp(user: CreateUserData) {
     const userDB = await userService.findUserByEmail(user.email);
@@ -51,19 +52,16 @@ export async function signIn(user: CreateUserData) {
 
 export async function generateToken(user: Users) {
 
-    const SECRET: string = process.env.TOKEN_SECRET_KEY ?? '';
-    const EXPIRES_IN = process.env.TOKEN_EXPIRES_IN;
-
     const payload: PayloadUserData = {
         id: user.id,
         email: user.email,
     }
 
     const jwtConfig = {
-        expiresIn: EXPIRES_IN
+        expiresIn: auth.expires
     };
 
-    const token = jwt.sign(payload, SECRET, jwtConfig);
+    const token = jwt.sign(payload, auth.secret, jwtConfig);
 
     return token;
 }

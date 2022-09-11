@@ -69,7 +69,7 @@ model Cards {
   cardNumber     String
   password       String
   securityCode   String
-  expirationDate DateTime
+  expirationDate String
   isVirtual      Boolean
   type           Type
   title          String 

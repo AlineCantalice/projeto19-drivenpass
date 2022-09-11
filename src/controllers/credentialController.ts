@@ -9,7 +9,7 @@ export async function createCredential(req: Request, res: Response) {
 
         await service.createCredential({ ...credential, userId });
 
-        res.status(201).send("Credential criada com sucesso!")
+        res.status(201).send("Credential created with success!")
     } catch (error: any) {
         res.status(error.response.status).send(error.response.message);
     }
@@ -47,7 +47,7 @@ export async function removeCredential(req: Request, res: Response) {
 
         await service.removeCredential(id, userId);
 
-        res.status(200).send("Credencial deletada com sucesso!!")
+        res.status(200).send("Credential removed with success!!")
     } catch (error: any) {
         res.status(error.response.status).send(error.response.message);
     }

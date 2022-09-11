@@ -8,8 +8,8 @@ export async function createCard(req: Request, res: Response) {
         const card: CreateCardData = req.body;
 
         await service.createCard({ ...card, userId });
-
-        res.status(201).send("Cartão criado com sucesso!")
+        
+        res.status(201).send("Card created with success!")
     } catch (error: any) {
         res.status(error.response.status).send(error.response.message);
     }
@@ -47,7 +47,7 @@ export async function removeCard(req: Request, res: Response) {
 
         await service.removeCard(id, userId);
 
-        res.status(200).send("card deletada com sucesso!!")
+        res.status(200).send("card removed with success!!")
     } catch (error: any) {
         res.status(error.response.status).send(error.response.message);
     }

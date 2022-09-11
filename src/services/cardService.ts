@@ -1,7 +1,7 @@
 import { CreateCardData } from "../types/cardTypes";
 import * as repository from "../repositories/cardRepository";
-import Cryptr from "cryptr";
 import { Cards } from "@prisma/client";
+import { decrypt, encrypt } from "./cryptService";
 
 export async function createCard(card: CreateCardData): Promise<void> {
     const existCard = await repository.findByTitleAndUserId(card.title, card.userId);
@@ -16,8 +16,9 @@ export async function createCard(card: CreateCardData): Promise<void> {
     }
 
     const hashPassword = encrypt(card.password);
+    const hashCvc = encrypt(card.securityCode);
 
-    await repository.insert({ ...card, password: hashPassword })
+    await repository.insert({ ...card, password: hashPassword, securityCode: hashCvc });
 }
 
 export async function getAllCards(userId: number): Promise<CreateCardData[]> {
@@ -25,7 +26,8 @@ export async function getAllCards(userId: number): Promise<CreateCardData[]> {
 
     const decryptedCard: CreateCardData[] = cards.map(item => {
         const decryptPassword = decrypt(item.password);
-        return { ...item, password: decryptPassword }
+        const decryptCvc = decrypt(item.securityCode);
+        return { ...item, password: decryptPassword, securityCode: decryptCvc }
     });
 
     return decryptedCard;
@@ -53,8 +55,9 @@ export async function getCardById(id: number, userId: number): Promise<Cards> {
     }
 
     const decryptedPassword = decrypt(card.password);
+    const decryptedCvc = decrypt(card.securityCode);
 
-    return { ...card, password: decryptedPassword };
+    return { ...card, password: decryptedPassword, securityCode: decryptedCvc };
 }
 
 export async function removeCard(id: number, userId: number): Promise<void> {
@@ -79,14 +82,4 @@ export async function removeCard(id: number, userId: number): Promise<void> {
     }
 
     await repository.remove(id);
-}
-
-function encrypt(password: string) {
-    const cryptr = new Cryptr('myTotallySecretKey');
-    return cryptr.encrypt(password);
-}
-
-function decrypt(encryptedPassword: string) {
-    const cryptr = new Cryptr('myTotallySecretKey');
-    return cryptr.decrypt(encryptedPassword);
 }

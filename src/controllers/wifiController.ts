@@ -9,7 +9,7 @@ export async function createWifi(req: Request, res: Response) {
 
         await service.createWifi({ ...wifi, userId });
 
-        res.status(201).send("Wifi criada com sucesso!")
+        res.status(201).send("Wifi created with success!")
     } catch (error: any) {
         res.status(error.response.status).send(error.response.message);
     }
@@ -47,7 +47,7 @@ export async function removeWifi(req: Request, res: Response) {
 
         await service.removeWifi(id, userId);
 
-        res.status(200).send("Credencial deletada com sucesso!!")
+        res.status(200).send("Wifi removed with success!!")
     } catch (error: any) {
         res.status(error.response.status).send(error.response.message);
     }

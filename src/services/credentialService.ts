@@ -1,7 +1,7 @@
 import { CreateCredentialData } from "../types/credentialTypes";
 import * as repository from "../repositories/credentialRepository";
-import Cryptr from "cryptr";
 import { Credentials } from "@prisma/client";
+import { decrypt, encrypt } from "./cryptService";
 
 export async function createCredential(credential: CreateCredentialData): Promise<void> {
     const existCredential = await repository.findByTitleAndUserId(credential.title, credential.userId);
@@ -79,14 +79,4 @@ export async function removeCredential(id: number, userId: number): Promise<void
     }
 
     await repository.remove(id);
-}
-
-function encrypt(password: string) {
-    const cryptr = new Cryptr('myTotallySecretKey');
-    return cryptr.encrypt(password);
-}
-
-function decrypt(encryptedPassword: string) {
-    const cryptr = new Cryptr('myTotallySecretKey');
-    return cryptr.decrypt(encryptedPassword);
 }

@@ -2,6 +2,7 @@ import { CreateWifiData } from "../types/wifiTypes";
 import * as repository from "../repositories/wifiRepository";
 import Cryptr from "cryptr";
 import { Wifi } from "@prisma/client";
+import { decrypt, encrypt } from "./cryptService";
 
 export async function createWifi(wifi: CreateWifiData): Promise<void> {
     
@@ -69,14 +70,4 @@ export async function removeWifi(id: number, userId: number): Promise<void> {
     }
 
     await repository.remove(id);
-}
-
-function encrypt(password: string) {
-    const cryptr = new Cryptr('myTotallySecretKey');
-    return cryptr.encrypt(password);
-}
-
-function decrypt(encryptedPassword: string) {
-    const cryptr = new Cryptr('myTotallySecretKey');
-    return cryptr.decrypt(encryptedPassword);
 }
