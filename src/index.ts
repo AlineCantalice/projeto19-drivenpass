@@ -4,6 +4,7 @@ import dotenv from 'dotenv';
 import handleErrorMiddleware from './middlewares/handleErrorMiddleware';
 import authRouter from './routers/authRouter';
 import credentialRouter from './routers/credentialRouter';
+import safeNoteRouter from './routers/safeNoteRouter';
 
 dotenv.config();
 
@@ -13,6 +14,7 @@ app.use(cors(), express.json());
 
 app.use(authRouter);
 app.use(credentialRouter);
+app.use(safeNoteRouter);
 
 app.use(handleErrorMiddleware);
 
