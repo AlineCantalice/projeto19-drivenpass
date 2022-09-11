@@ -77,6 +77,8 @@ export async function removeCredential(id: number, userId: number): Promise<void
             }
         }
     }
+
+    await repository.remove(id);
 }
 
 function encrypt(password: string) {

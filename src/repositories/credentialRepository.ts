@@ -18,5 +18,5 @@ export async function findByTitleAndUserId(title: string, userId: number) {
 }
 
 export async function remove(id: number) {
-    
+    await prismaClient.credentials.delete({ where: { id } });
 }
