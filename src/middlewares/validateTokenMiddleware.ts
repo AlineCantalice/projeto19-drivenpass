@@ -1,24 +1,22 @@
-import dotenv from "dotenv";
-import { NextFunction, Request, Response } from "express";
-import jwt from "jsonwebtoken";
+import dotenv from 'dotenv';
+import { NextFunction, Request, Response } from 'express';
+import jwt from 'jsonwebtoken';
 
 dotenv.config();
 
-export function validateToken() {
-    return (req: Request, res: Response, next: NextFunction) => {
-        const token = req.headers['authorization'];
+export async function validateToken(req: Request, res: Response, next: NextFunction) {
+    const { authorization } = req.headers;
 
-        if(!token){
-            return res.status(401).send("Token não enviado!");
-        }
+    if (!authorization) {
+        return res.status(401).send('Voce não enviou o token');
+    }
 
-        const SECRET: string = process.env.TOKEN_SECRET_KEY ?? '';
+    const SECRET: string = process.env.TOKEN_SECRET_KEY ?? '';
 
-        try {
-            jwt.verify(token, SECRET);
-            next();
-        } catch (error) {
-            return res.status(401).send("Token inválido!");
-        }
-    };
+    try {
+        jwt.verify(authorization, SECRET);
+        next();
+    } catch (error) {
+        return res.status(401).send('Seu token não é válido');
+    }
 }

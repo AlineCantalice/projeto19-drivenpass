@@ -2,7 +2,8 @@ import express from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
 import handleErrorMiddleware from './middlewares/handleErrorMiddleware';
-import userRouter from './routers/userRouter';
+import authRouter from './routers/authRouter';
+import credentialRouter from './routers/credentialRouter';
 
 dotenv.config();
 
@@ -10,7 +11,8 @@ const app = express();
 
 app.use(cors(), express.json());
 
-app.use(userRouter);
+app.use(authRouter);
+app.use(credentialRouter);
 
 app.use(handleErrorMiddleware);
 

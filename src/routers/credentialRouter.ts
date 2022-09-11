@@ -6,7 +6,7 @@ import credentialSchema from "../schemas/credentialSchema";
 
 const router = Router();
 
-router.post('/credentials', validateToken, validateSchemaMiddleware(credentialSchema), createCredential);
+router.post('/credentials/:userId', validateToken, validateSchemaMiddleware(credentialSchema), createCredential);
 router.get('/credentials', validateToken, getAllCredentials);
 router.get('/credentials/:id', validateToken, getCredentialById);
 router.delete('/credentials/:id', validateToken, removeCredential);
