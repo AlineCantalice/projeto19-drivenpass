@@ -36,6 +36,7 @@ model Credentials {
   username      String
 
   @@unique([title, userId])
+  @@map("credentials")
 }
 
 model SafeNotes {
@@ -46,6 +47,7 @@ model SafeNotes {
   note   String @db.VarChar(1000)
 
   @@unique([userId, title])
+  @@map("safeNotes")
 }
 
 model Wifi {
@@ -55,6 +57,8 @@ model Wifi {
   title    String @db.VarChar(50)
   password String
   wifiName  String
+
+  @@map("wifis")
 }
 
 model Cards {
@@ -71,4 +75,5 @@ model Cards {
   title          String   @db.VarChar(50)
 
   @@unique([title, userId])
+  @@map("cards")
 }

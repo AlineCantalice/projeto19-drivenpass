@@ -19,8 +19,15 @@ export async function createCredential(credential: CreateCredentialData) {
     await repository.insert({ ...credential, password: hashPassword })
 }
 
-export async function getAllCredentials() {
-    console.log("entrou no serviço pra buscar credencial")
+export async function getAllCredentials(userId: number) {
+    const credentials = await repository.findAllCredentialOfUser(userId);
+
+    const decryptedCredential = credentials.map(item => {
+        const decryptPassword = decrypt(item.password);
+        return {...item, password: decryptPassword}
+    });
+
+    return decryptedCredential;
 }
 
 export async function getCredentialById(id: number) {
