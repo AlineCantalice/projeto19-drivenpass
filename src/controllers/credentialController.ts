@@ -30,8 +30,9 @@ export async function getAllCredentials(req: Request, res: Response) {
 export async function getCredentialById(req: Request, res: Response) {
     try {
         const id: number = Number(req.params.id);
+        const userId: number = Number(req.params.userId);
 
-        const credencial = await service.getCredentialById(id);
+        const credencial = await service.getCredentialById(id, userId);
 
         res.status(200).send(credencial)
     } catch (error: any) {
@@ -42,8 +43,9 @@ export async function getCredentialById(req: Request, res: Response) {
 export async function removeCredential(req: Request, res: Response) {
     try {
         const id: number = Number(req.params.id);
+        const userId: number = Number(req.params.userId);
 
-        await service.removeCredential(id);
+        await service.removeCredential(id, userId);
 
         res.status(200).send("Credencial deletada com sucesso!!")
     } catch (error: any) {

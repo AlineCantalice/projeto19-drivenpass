@@ -8,7 +8,7 @@ const router = Router();
 
 router.post('/credentials/:userId', validateToken, validateSchemaMiddleware(credentialSchema), createCredential);
 router.get('/credentials/:userId', validateToken, getAllCredentials);
-router.get('/credentials/:id', validateToken, getCredentialById);
-router.delete('/credentials/:id', validateToken, removeCredential);
+router.get('/credentials/:id/:userId', validateToken, getCredentialById);
+router.delete('/credentials/:id/:userId', validateToken, removeCredential);
 
 export default router;
