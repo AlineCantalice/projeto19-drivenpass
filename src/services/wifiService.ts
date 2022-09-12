@@ -1,6 +1,5 @@
 import { CreateWifiData } from "../types/wifiTypes";
 import * as repository from "../repositories/wifiRepository";
-import Cryptr from "cryptr";
 import { Wifi } from "@prisma/client";
 import { decrypt, encrypt } from "./cryptService";
 
